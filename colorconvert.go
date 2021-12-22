@@ -217,7 +217,7 @@ func Round3(values []float64) []int {
 	return newvals
 }
 
-func rgb_to_hsl(rgb []int) []int {
+func RGBtoHSL(rgb []int) []int {
 	var r, g, b, h, s float64
 	r = float64(rgb[0]) / 255
 	g = float64(rgb[1]) / 255
@@ -254,7 +254,7 @@ func rgb_to_hsl(rgb []int) []int {
 	//return []int{Round(h), Round(s * 100), Round(l * 100)}
 }
 
-func rgb_to_hsv(rgb []int) []int {
+func RGBtoHSV(rgb []int) []int {
 	var r, g, b, h, s, rdif, gdif, bdif float64
 	r = float64(rgb[0]) / 255
 	g = float64(rgb[1]) / 255
@@ -289,11 +289,11 @@ func rgb_to_hsv(rgb []int) []int {
 	//return []int{Round(h * 360), Round(s * 100), Round(v * 100)}
 }
 
-func rgb_to_hwb(rgb []int) []int {
+func RGBtoHWB(rgb []int) []int {
 	r := float64(rgb[0])
 	g := float64(rgb[1])
 	b := float64(rgb[2])
-	h := rgb_to_hsl(rgb)[0]
+	h := RGBtoHSL(rgb)[0]
 	w := 1 / 255 * Min([]float64{r, Min([]float64{g, b})})
 
 	b = 1 - 1/255*Max([]float64{r, Max([]float64{g, b})})
@@ -302,7 +302,7 @@ func rgb_to_hwb(rgb []int) []int {
 	//return []int{h, Round(w * 100), Round(b * 100)}
 }
 
-func rgb_to_cmyk(rgb []int) []int {
+func RGBtoCMYK(rgb []int) []int {
 	r := float64(rgb[0]) / 255
 	g := float64(rgb[1]) / 255
 	b := float64(rgb[2]) / 255
@@ -322,7 +322,7 @@ func comparativeDistance(x []int, y []int) int {
 	return Round(math.Pow(float64(x[0]-y[0]), 2) + math.Pow(float64(x[1]-y[1]), 2) + math.Pow(float64(x[2]-y[2]), 2))
 }
 
-func rgb_to_keyword(rgb []int) string {
+func RGBtoKeyword(rgb []int) string {
 	for keyword, value := range COLORS {
 		if rgb[0] == value[0] && rgb[1] == value[1] && rgb[2] == value[2] {
 			return keyword
@@ -346,7 +346,7 @@ func rgb_to_keyword(rgb []int) string {
 	return currentClosestKeyword
 }
 
-func color_name_to_rgb(color_name string) ([]int, error) {
+func ColorNametoRGB(color_name string) ([]int, error) {
 	keyword := strings.ToLower(strings.ReplaceAll(color_name, " ", ""))
 	//Convert color name to RGB hex value.
 	if rgb, ok := COLORS[keyword]; ok {
@@ -355,7 +355,7 @@ func color_name_to_rgb(color_name string) ([]int, error) {
 	return nil, errors.New("Unknown Color Name")
 }
 
-func rgb_to_xyz(rgb []int) []int {
+func RGBtoXYZ(rgb []int) []int {
 	r := float64(rgb[0]) / 255
 	g := float64(rgb[1]) / 255
 	b := float64(rgb[2]) / 255
@@ -385,8 +385,8 @@ func rgb_to_xyz(rgb []int) []int {
 	//return []int{Round(x * 100), Round(y * 100), Round(z * 100)}
 }
 
-func rgb_to_lab(rgb []int) []int {
-	xyz := rgb_to_xyz(rgb)
+func RGBtoLAB(rgb []int) []int {
+	xyz := RGBtoXYZ(rgb)
 	x := float64(xyz[0])
 	y := float64(xyz[1])
 	z := float64(xyz[2])
@@ -419,7 +419,7 @@ func rgb_to_lab(rgb []int) []int {
 	//return []int{Round(l), Round(a), Round(b)}
 }
 
-func hsl_to_rgb(hsl []int) []int {
+func HSLtoRGB(hsl []int) []int {
 	h := float64(hsl[0] / 360)
 	s := float64(hsl[1] / 100)
 	l := float64(hsl[2] / 100)
@@ -465,7 +465,7 @@ func hsl_to_rgb(hsl []int) []int {
 	return rgb
 }
 
-func hsl_to_hsv(hsl []int) []int {
+func HSLtoHSV(hsl []int) []int {
 	h := float64(hsl[0])
 	s := float64(hsl[1] / 100)
 	l := float64(hsl[2] / 100)
@@ -496,7 +496,7 @@ func hsl_to_hsv(hsl []int) []int {
 	//return []int{Round(h), Round(sv * 100), Round(v * 100)}
 }
 
-func hsv_to_rgb(hsv []int) []int {
+func HSVtoRGB(hsv []int) []int {
 	h := float64(hsv[0] / 60)
 	s := float64(hsv[1] / 100)
 	v := float64(hsv[2] / 100)
@@ -526,7 +526,7 @@ func hsv_to_rgb(hsv []int) []int {
 	}
 }
 
-func hsv_to_hsl(hsv []int) []int {
+func HSVtoHSL(hsv []int) []int {
 	h := float64(hsv[0])
 	s := float64(hsv[1] / 100)
 	v := float64(hsv[2] / 100)
@@ -547,7 +547,7 @@ func hsv_to_hsl(hsv []int) []int {
 }
 
 // http://dev.w3.org/csswg/css-color/#hwb-to-rgb
-func hwb_to_rgb(hwb []int) []int {
+func HWBtoRGB(hwb []int) []int {
 	h := float64(hwb[0] / 360)
 	wh := float64(hwb[1] / 100)
 	bl := float64(hwb[2] / 100)
@@ -611,7 +611,7 @@ func hwb_to_rgb(hwb []int) []int {
 	//return []int{Round(r * 255), Round(g * 255), Round(b * 255)}
 }
 
-func cmyk_to_rgb(cmyk []int) []int {
+func CMYKtoRGB(cmyk []int) []int {
 	c := float64(cmyk[0] / 100)
 	m := float64(cmyk[1] / 100)
 	y := float64(cmyk[2] / 100)
@@ -625,7 +625,7 @@ func cmyk_to_rgb(cmyk []int) []int {
 	//return []int{Round(r * 255), Round(g * 255), Round(b * 255)}
 }
 
-func xyz_to_rgb(xyz []int) []int {
+func XYZtoRGB(xyz []int) []int {
 	x := float64(xyz[0] / 100)
 	y := float64(xyz[1] / 100)
 	z := float64(xyz[2] / 100)
@@ -660,7 +660,7 @@ func xyz_to_rgb(xyz []int) []int {
 	return Round3([]float64{(r * 255), (g * 255), (b * 255)})
 }
 
-func xyz_to_lab(xyz []int) []int {
+func XYZtoLAB(xyz []int) []int {
 	x := float64(xyz[0])
 	y := float64(xyz[1])
 	z := float64(xyz[2])
@@ -693,7 +693,7 @@ func xyz_to_lab(xyz []int) []int {
 	//return []int{Round(l), Round(a), Round(b)}
 }
 
-func lab_to_xyz(lab []int) []int {
+func LABtoXYZ(lab []int) []int {
 	l := float64(lab[0])
 	a := float64(lab[1])
 	b := float64(lab[2])
@@ -730,7 +730,7 @@ func lab_to_xyz(lab []int) []int {
 	//return []int{Round(x), Round(y), Round(z)}
 }
 
-func lab_to_lch(lab []int) []int {
+func LABtoLCH(lab []int) []int {
 	l := float64(lab[0])
 	a := float64(lab[1])
 	b := float64(lab[2])
@@ -748,7 +748,7 @@ func lab_to_lch(lab []int) []int {
 	//return []int{Round(l), Round(c), Round(h)}
 }
 
-func lch_to_lab(lch []int) []int {
+func LCHtoLAB(lch []int) []int {
 	l := float64(lch[0])
 	c := float64(lch[1])
 	h := float64(lch[2])
@@ -891,7 +891,7 @@ func hex_to_rgb(args int) []int {
 	return [r, g, b];
 };
 */
-func rgb_to_hcg(rgb []int) []int {
+func RGBtoHCG(rgb []int) []int {
 	r := float64(rgb[0] / 255)
 	g := float64(rgb[1] / 255)
 	b := float64(rgb[2] / 255)
@@ -923,7 +923,7 @@ func rgb_to_hcg(rgb []int) []int {
 	return []int{hue * 360, Round(chroma * 100), Round(grayscale * 100)}
 }
 
-func hsl_to_hcg(hsl []int) []int {
+func HSLtoHCG(hsl []int) []int {
 	s := float64(hsl[1] / 100)
 	l := float64(hsl[2] / 100)
 
@@ -941,7 +941,7 @@ func hsl_to_hcg(hsl []int) []int {
 	return []int{hsl[0], Round(c * 100), Round(f * 100)}
 }
 
-func hsv_to_hcg(hsv []int) []int {
+func HSVtoHCG(hsv []int) []int {
 	s := float64(hsv[1] / 100)
 	v := float64(hsv[2] / 100)
 
@@ -955,7 +955,7 @@ func hsv_to_hcg(hsv []int) []int {
 	return []int{hsv[0], Round(c * 100), Round(f * 100)}
 }
 
-func hcg_to_rgb(hcg []int) []int {
+func HCGtoRGB(hcg []int) []int {
 	h := float64(hcg[0] / 360)
 	c := float64(hcg[1] / 100)
 	g := float64(hcg[2] / 100)
@@ -1014,7 +1014,7 @@ func hcg_to_rgb(hcg []int) []int {
 	}
 }
 
-func hcg_to_hsv(hcg []int) []int {
+func HCGtoHSV(hcg []int) []int {
 	c := float64(hcg[1] / 100)
 	g := float64(hcg[2] / 100)
 
@@ -1028,7 +1028,7 @@ func hcg_to_hsv(hcg []int) []int {
 	return []int{hcg[0], Round(f * 100), Round(v * 100)}
 }
 
-func hcg_to_hsl(hcg []int) []int {
+func HCGtoHSL(hcg []int) []int {
 	c := float64(hcg[1] / 100)
 	g := float64(hcg[2] / 100)
 
@@ -1044,14 +1044,14 @@ func hcg_to_hsl(hcg []int) []int {
 	return []int{hcg[0], Round(s * 100), Round(l * 100)}
 }
 
-func hcg_to_hwb(hcg []int) []int {
+func HCGtoHWB(hcg []int) []int {
 	c := float64(hcg[1] / 100)
 	g := float64(hcg[2] / 100)
 	v := c + g*(1.0-c)
 	return []int{hcg[0], Round((v - c) * 100), Round((1 - v) * 100)}
 }
 
-func hwb_to_hcg(hwb []int) []int {
+func HWBtoHCG(hwb []int) []int {
 	w := float64(hwb[1] / 100)
 	b := float64(hwb[2] / 100)
 	v := 1 - b
@@ -1067,39 +1067,39 @@ func hwb_to_hcg(hwb []int) []int {
 	return []int{hwb[0], Round(c * 100), Round(g * 100)}
 }
 
-func apple_to_rgb(apple []int) []int {
+func AppletoRGB(apple []int) []int {
 	return []int{(apple[0] / 65535) * 255, (apple[1] / 65535) * 255, (apple[2] / 65535) * 255}
 }
 
-func rgb_to_apple(rgb []int) []int {
+func RGBtoApple(rgb []int) []int {
 	return []int{(rgb[0] / 255) * 65535, (rgb[1] / 255) * 65535, (rgb[2] / 255) * 65535}
 }
 
-func gray_to_rgb(args []int) []int {
+func GraytoRGB(args []int) []int {
 	return []int{args[0] / 100 * 255, args[0] / 100 * 255, args[0] / 100 * 255}
 }
 
-func gray_to_hsl(args []int) []int {
+func GraytoHSL(args []int) []int {
 	return []int{0, 0, args[0]}
 }
 
-func gray_to_hsv(gray []int) []int {
-	return gray_to_hsl(gray)
+func GraytoHSV(gray []int) []int {
+	return GraytoHSL(gray)
 }
 
-func gray_to_hwb(gray []int) []int {
+func GraytoHWB(gray []int) []int {
 	return []int{0, 100, gray[0]}
 }
 
-func gray_to_cmyk(gray []int) []int {
+func GraytoCMYK(gray []int) []int {
 	return []int{0, 0, 0, gray[0]}
 }
 
-func gray_to_lab(gray []int) []int {
+func GraytoLab(gray []int) []int {
 	return []int{gray[0], 0, 0}
 }
 
-func gray_to_hex(gray []int) string {
+func GrayToHex(gray []int) string {
 	val := Round(float64(gray[0]/100*255)) & 0xFF
 	integer := (val << 16) + (val << 8) + val
 
@@ -1107,7 +1107,7 @@ func gray_to_hex(gray []int) string {
 	return string("000000"[len(hex)]) + hex
 }
 
-func rgb_to_gray(rgb []int) []int {
+func RGBtoGray(rgb []int) []int {
 	val := float64((rgb[0] + rgb[1] + rgb[2]) / 3)
 	return []int{Round(val / 255 * 100)}
 }
